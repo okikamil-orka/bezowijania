@@ -16,10 +16,12 @@ Przeskanuj wiadomości i otwórz tylko te, które Cię interesują.
 
 Każdy artykuł ma w `<meta property="og:description">` krótkie, rzeczowe streszczenie od redakcji.
 
-1. `content.js` znajduje linki do artykułów (`…,nId,123…`), gdy wjeżdżają w widok.
+1. `content.js` znajduje linki do artykułów, gdy wjeżdżają w widok. Jak rozpoznać artykuł na danym portalu, opisuje `sites.js`
+   (Interia: `,nId,123`; WP: `-7332962258495744a`; Onet: `/slug-artykulu/c69kw8r`).
 2. `background.js` pobiera stronę artykułu (tylko `<head>`, bez ciasteczek) i odczytuje streszczenie
    (zapasowo: `meta description`, potem pierwszy akapit). Pomija streszczenia, które tylko powtarzają tytuł.
-3. Tytuł jest podmieniany i dopasowywany do kafelka. Niebieska kropka = podmieniony tytuł, **najechanie pokazuje oryginał**.
+3. Tytuł jest podmieniany i dopasowywany do kafelka. Niebieska kropka = podmieniony tytuł, pomarańczowa = prawdopodobnie reklama.
+   **Najechanie pokazuje oryginał.** Znaczniki gatunku z tytułu (np. `[OPINIA]`) zostają.
 4. Wyniki są trzymane lokalnie przez 3 dni, maks. 4 pobrania naraz. Bez AI, bez serwerów, bez analityki.
 
 ## Instalacja (dev)
@@ -33,7 +35,7 @@ Każdy artykuł ma w `<meta property="og:description">` krótkie, rzeczowe stres
 ```bash
 # podbij "version" w manifest.json, potem:
 zip -r dist/bezowijania-$(jq -r .version manifest.json).zip \
-  manifest.json background.js content.js content.css popup.html popup.js icons
+  manifest.json sites.js background.js content.js content.css popup.html popup.js icons
 ```
 
 ZIP wgrywasz do GitHub Releases i/lub do Chrome Web Store Developer Dashboard.
@@ -42,7 +44,8 @@ ZIP wgrywasz do GitHub Releases i/lub do Chrome Web Store Developer Dashboard.
 
 | Plik | Rola |
 |---|---|
-| `manifest.json` | Manifest V3, uprawnienia do interia.pl i serwisów grupy |
+| `manifest.json` | Manifest V3, uprawnienia do Interii, WP, Onetu i ich serwisów |
+| `sites.js` | konfiguracja portali: gdzie działa, jak rozpoznać artykuł, skąd wolno pobierać |
 | `background.js` | kolejka pobrań, wyciąganie streszczeń, pamięć podręczna |
 | `content.js` | wyszukiwanie linków, podmiana tytułów, dopasowanie do kafelków |
 | `content.css` | niebieska kropka przy podmienionym tytule |
@@ -51,7 +54,6 @@ ZIP wgrywasz do GitHub Releases i/lub do Chrome Web Store Developer Dashboard.
 
 ## Plany
 
-- WP.pl i Onet.pl (konfiguracja per portal).
 - Opcjonalny krok AI dla słabych streszczeń; oznaczanie artykułów sponsorowanych.
 
 Polityka prywatności: [docs/privacy.html](https://okikamil-orka.github.io/bezowijania/privacy.html)

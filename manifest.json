@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "BezOwijania",
-  "version": "0.1.0",
-  "description": "Zamienia clickbaitowe tytuły na portalach na zdania mówiące, co się naprawdę stało. Bez owijania w bawełnę.",
+  "version": "0.2.0",
+  "description": "Zamienia clickbaitowe tytuły na Interii, WP i Onecie na zdania mówiące, co się naprawdę stało. Bez owijania w bawełnę.",
   "permissions": [
     "storage"
   ],
@@ -13,7 +13,34 @@
     "*://*.top.pl/*",
     "*://*.polsat.pl/*",
     "*://*.terazgotuje.pl/*",
-    "*://*.smaker.pl/*"
+    "*://*.smaker.pl/*",
+    "*://*.wp.pl/*",
+    "*://*.money.pl/*",
+    "*://*.o2.pl/*",
+    "*://*.pudelek.pl/*",
+    "*://*.abczdrowie.pl/*",
+    "*://*.autokult.pl/*",
+    "*://*.jastrzabpost.pl/*",
+    "*://*.pysznosci.pl/*",
+    "*://*.dobreprogramy.pl/*",
+    "*://*.fotoblogia.pl/*",
+    "*://*.benchmark.pl/*",
+    "*://*.gadzetomania.pl/*",
+    "*://*.komorkomania.pl/*",
+    "*://*.parenting.pl/*",
+    "*://*.ipolska24.pl/*",
+    "*://*.genialne.pl/*",
+    "*://*.polygamia.pl/*",
+    "*://*.onet.pl/*",
+    "*://*.businessinsider.com.pl/*",
+    "*://*.komputerswiat.pl/*",
+    "*://*.auto-swiat.pl/*",
+    "*://*.fakt.pl/*",
+    "*://*.plejada.pl/*",
+    "*://*.medonet.pl/*",
+    "*://*.noizz.pl/*",
+    "*://*.forbes.pl/*",
+    "*://*.newsweek.pl/*"
   ],
   "background": {
     "service_worker": "background.js"
@@ -21,9 +48,12 @@
   "content_scripts": [
     {
       "matches": [
-        "*://*.interia.pl/*"
+        "*://*.interia.pl/*",
+        "*://*.wp.pl/*",
+        "*://*.onet.pl/*"
       ],
       "js": [
+        "sites.js",
         "content.js"
       ],
       "css": [

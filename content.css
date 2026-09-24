@@ -1,8 +1,9 @@
-/* Small blue dot in front of every title rewritten by BezOwijania. */
-.ti-text::before {
+/* Blue dot in front of every title rewritten by BezOwijania; orange = probably sponsored/affiliate. */
+.bo-text::before {
   content: "●";
   color: #2f80ed;
   font-size: .6em;
   vertical-align: .25em;
   margin-right: .35em;
 }
+.bo-text.bo-promo::before { color: #f59e0b; }

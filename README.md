@@ -1,6 +1,6 @@
 # BezOwijania
 
-<img src="icons/orca.svg" width="96" align="right" alt="">
+<img src="icons/logo.svg" width="96" align="right" alt="">
 
 Rozszerzenie do Chrome, które zamienia clickbaitowe tytuły na portalach na zdania mówiące, co się naprawdę stało.
 Przeskanuj wiadomości i otwórz tylko te, które Cię interesują.

@@ -2,3 +2,4 @@ dist/
 _to_delete/
 .claude/
 .DS_Store
+Claude outputs/

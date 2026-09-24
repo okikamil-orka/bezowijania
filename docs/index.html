@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BezOwijania — tytuły, które mówią, co się stało</title>
+<meta name="description" content="Rozszerzenie do Chrome, które zamienia clickbaitowe tytuły na portalach na zdania mówiące, co się naprawdę stało.">
+<meta property="og:title" content="BezOwijania">
+<meta property="og:description" content="Tytuły, które mówią, co się stało. Przeskanuj wiadomości i otwórz tylko te, które Cię interesują.">
+<link rel="icon" href="favicon.png">
+<style>
+  :root { --ink:#0f172a; --muted:#475569; --bg:#f8fafc; --card:#fff; --line:#e2e8f0; --blue:#1e6fd9; --blue-soft:#e8f1fd; --old:#94a3b8; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink:#e2e8f0; --muted:#94a3b8; --bg:#0b1220; --card:#111a2e; --line:#1f2a44; --blue:#5aa2ff; --blue-soft:#13233f; --old:#64748b; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color:var(--ink); background:var(--bg); }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 20px; }
+  header { padding: 64px 0 40px; display:flex; gap:28px; align-items:center; flex-wrap:wrap; }
+  header img { width:112px; height:112px; flex:none; }
+  h1 { font-size: clamp(34px, 6vw, 52px); line-height:1.05; margin:0 0 10px; letter-spacing:-.02em; }
+  .lead { font-size: 20px; color:var(--muted); margin:0; max-width: 560px; }
+  .btns { display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
+  .btn { display:inline-block; padding:11px 18px; border-radius:10px; font-weight:600; text-decoration:none; border:1px solid var(--line); color:var(--ink); background:var(--card); }
+  .btn.primary { background:var(--blue); border-color:var(--blue); color:#fff; }
+  h2 { font-size: 26px; margin: 48px 0 14px; letter-spacing:-.01em; }
+  .examples { display:grid; gap:12px; }
+  .ex { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px 18px; }
+  .ex .before { color:var(--old); text-decoration: line-through; text-decoration-thickness: 1px; font-size:15px; }
+  .ex .after { font-weight:600; margin-top:4px; }
+  .ex .after::before { content:"●"; color:var(--blue); font-size:.6em; vertical-align:.25em; margin-right:.45em; }
+  .steps { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:12px; }
+  .step { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px 18px; }
+  .step b { display:block; margin-bottom:4px; }
+  .step p { margin:0; color:var(--muted); font-size:15px; }
+  ol { padding-left: 22px; } li { margin: 4px 0; }
+  code { background:var(--blue-soft); padding:1px 6px; border-radius:6px; font-size:.9em; }
+  footer { border-top:1px solid var(--line); margin-top:56px; padding:24px 0 48px; color:var(--muted); font-size:14px; }
+  footer a, p a, li a { color:var(--blue); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="orca.svg" alt="">
+    <div>
+      <h1>BezOwijania</h1>
+      <p class="lead">Tytuły, które mówią, co się naprawdę stało. Przeskanuj wiadomości w kilka sekund i otwórz tylko te, które Cię interesują.</p>
+      <div class="btns">
+        <a class="btn primary" href="https://github.com/okikamil-orka/bezowijania/releases/latest">Pobierz rozszerzenie</a>
+        <a class="btn" href="https://github.com/okikamil-orka/bezowijania">Kod na GitHubie</a>
+      </div>
+    </div>
+  </header>
+
+  <h2>Tak to wygląda</h2>
+  <div class="examples">
+    <div class="ex"><div class="before">Sensacja w ćwierćfinale mistrzostw Europy. Włosi za burtą</div><div class="after">Finlandia wyeliminowała mistrzów świata Włochy 3:2 w ćwierćfinale siatkarskich mistrzostw Europy, zagra z Francją o finał.</div></div>
+    <div class="ex"><div class="before">Marian Kmita tłumaczy ws. długów PKOl. Oto szczegóły</div><div class="after">Długi PKOl przekraczają 4 mln zł. Największe dotyczą leasingu aut i związków sportowych.</div></div>
+    <div class="ex"><div class="before">USA obawia się „rozlania” wojny. Specjalne zaproszenie dla Putina</div><div class="after">Rubio: USA boją się rozprzestrzenienia wojny w Ukrainie. Putin zaproszony na szczyt G20 na Florydzie.</div></div>
+  </div>
+
+  <h2>Jak to działa</h2>
+  <div class="steps">
+    <div class="step"><b>Czyta streszczenie</b><p>Każdy artykuł ma w kodzie strony krótkie, rzeczowe streszczenie od redakcji. Rozszerzenie je odczytuje.</p></div>
+    <div class="step"><b>Podmienia tytuł</b><p>Zamiast zagadki widzisz zdanie z faktami. Niebieska kropka oznacza podmieniony tytuł.</p></div>
+    <div class="step"><b>Oryginał pod ręką</b><p>Najedź na tytuł, żeby zobaczyć oryginał. Suwakiem w okienku wtyczki wyłączysz wszystko jednym ruchem.</p></div>
+  </div>
+  <p>Bez sztucznej inteligencji, bez kont i bez serwerów. Działa na <b>interia.pl</b> i powiązanych serwisach. WP i Onet są w planach.</p>
+
+  <h2>Instalacja</h2>
+  <ol>
+    <li>Pobierz plik <code>bezowijania-x.y.z.zip</code> z <a href="https://github.com/okikamil-orka/bezowijania/releases/latest">najnowszego wydania</a> i rozpakuj go.</li>
+    <li>Otwórz w Chrome <code>chrome://extensions</code> i włącz <b>Tryb dewelopera</b> (prawy górny róg).</li>
+    <li>Kliknij <b>Załaduj rozpakowane</b> i wskaż rozpakowany folder.</li>
+    <li>Wejdź na <a href="https://www.interia.pl">interia.pl</a>.</li>
+  </ol>
+  <p>Wersja w Chrome Web Store jest w przygotowaniu.</p>
+
+  <footer>
+    <a href="privacy.html">Polityka prywatności</a> · Kontakt: <a href="mailto:orkaitkamilorlowski@gmail.com">orkaitkamilorlowski@gmail.com</a><br>
+    BezOwijania nie jest powiązane z Grupą Interia, Wirtualną Polską ani Ringier Axel Springer.
+  </footer>
+</div>
+</body>
+</html>

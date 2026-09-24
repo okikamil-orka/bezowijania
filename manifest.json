@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "BezOwijania",
+  "version": "0.1.0",
+  "description": "Zamienia clickbaitowe tytuły na portalach na zdania mówiące, co się naprawdę stało. Bez owijania w bawełnę.",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.interia.pl/*",
+    "*://*.pomponik.pl/*",
+    "*://*.deccoria.pl/*",
+    "*://*.top.pl/*",
+    "*://*.polsat.pl/*",
+    "*://*.terazgotuje.pl/*",
+    "*://*.smaker.pl/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.interia.pl/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "BezOwijania",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "homepage_url": "https://okikamil-orka.github.io/bezowijania/",
+  "author": {
+    "email": "orkaitkamilorlowski@gmail.com"
+  }
+}

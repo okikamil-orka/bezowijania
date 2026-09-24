@@ -1,0 +1,8 @@
+/* Small blue dot in front of every title rewritten by BezOwijania. */
+.ti-text::before {
+  content: "●";
+  color: #2f80ed;
+  font-size: .6em;
+  vertical-align: .25em;
+  margin-right: .35em;
+}

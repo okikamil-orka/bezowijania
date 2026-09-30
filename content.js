@@ -7,6 +7,7 @@
 
   const MIN_TITLE_LEN = 25;
   const MIN_FONT_PX = 12;
+  const MIN_FONT_SCALE = 0.75; // longer summaries get a smaller font, but never below 75% of the original
 
   let enabled = true;
   const applied = []; // { a, node, original, summary, promo, touched: [{el, cssText}] }
@@ -167,22 +168,63 @@
       }
     }
 
-    // 2) If it still overflows the link box (image tiles have fixed height), shrink the font.
+    // 2) Longer text → proportionally smaller font (keeps roughly the same area), at most down to 75%.
+    const cs = getComputedStyle(textEl);
+    const base = parseFloat(cs.fontSize);
+    const ratio = rec.original.trim().length / node.nodeValue.length;
+    let fs = Math.max(MIN_FONT_PX, Math.min(base, Math.round(base * Math.max(MIN_FONT_SCALE, Math.sqrt(ratio)))));
+    touch(rec, textEl);
+    if (cs.lineHeight.endsWith('px')) textEl.style.lineHeight = String(parseFloat(cs.lineHeight) / base); // keep spacing proportional
+    if (fs < base) textEl.style.fontSize = fs + 'px';
+
+    // 3) If it still spills out of its card (fixed-height tiles, list rows) or covers a badge, keep shrinking.
+    const boxes = cardBoxes(a);
+    const card = boxes[boxes.length - 1];
+    const badges = [...card.querySelectorAll('*')].filter(el =>
+      !el.contains(textEl) && !textEl.contains(el) &&
+      [...el.childNodes].some(n => n.nodeType === Node.TEXT_NODE && n.nodeValue.trim())
+    ).map(el => el.getBoundingClientRect()).filter(r => r.width && r.height);
+    const range = document.createRange();
+    range.selectNodeContents(node);
+    let clamped = false;
     const overflows = () => {
-      const ar = a.getBoundingClientRect();
-      const tr = textEl.getBoundingClientRect();
-      if (!ar.height) return false;
-      return tr.top < ar.top - 1 || tr.bottom > ar.bottom + 1;
+      // Range rects ignore overflow clipping, so once clamped measure the element and only its visible lines.
+      const clip = clamped ? textEl.getBoundingClientRect() : null;
+      const tr = clip || range.getBoundingClientRect();
+      if (!tr.height) return false;
+      for (const el of boxes) {
+        const br = el.getBoundingClientRect();
+        if (br.height && (tr.top < br.top - 1 || tr.bottom > br.bottom + 1)) return true;
+      }
+      const lines = [...range.getClientRects()].filter(l => !clip || l.bottom <= clip.bottom + 1);
+      return lines.some(l => badges.some(b =>
+        l.left < b.right - 1 && l.right > b.left + 1 && l.top < b.bottom - 1 && l.bottom > b.top + 1));
     };
-    let fs = parseFloat(getComputedStyle(textEl).fontSize);
     let guardN = 0;
-    if (overflows()) {
-      touch(rec, textEl);
-      textEl.style.lineHeight = '1.25';
-    }
     while (overflows() && fs > MIN_FONT_PX && guardN++ < 40) {
       fs -= 1;
       textEl.style.fontSize = fs + 'px';
     }
+
+    // 4) Still too long at the minimum font: cut it to the lines that fit; full text stays in the tooltip.
+    if (!overflows()) return;
+    const lh = parseFloat(getComputedStyle(textEl).lineHeight) || fs * 1.25;
+    let lines = Math.max(2, Math.round(range.getBoundingClientRect().height / lh));
+    Object.assign(textEl.style, { display: '-webkit-box', webkitBoxOrient: 'vertical', overflow: 'hidden', maxHeight: 'none', height: 'auto' });
+    textEl.style.webkitLineClamp = String(lines);
+    clamped = true;
+    while (overflows() && lines > 2) textEl.style.webkitLineClamp = String(--lines);
+    a.setAttribute('title', node.nodeValue + '\n\n' + a.getAttribute('title'));
+  }
+
+  // The link plus every ancestor that belongs only to this article (the "card").
+  function cardBoxes(a) {
+    const out = [a];
+    let el = a.parentElement;
+    for (let i = 0; el && el !== document.body && i < 8; i++, el = el.parentElement) {
+      if (![...el.querySelectorAll('a[href]')].every(x => x.href === a.href)) break;
+      out.push(el);
+    }
+    return out;
   }
 })();

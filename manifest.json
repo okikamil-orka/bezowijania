@@ -43,7 +43,11 @@
     "*://*.newsweek.pl/*"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "scripts": [
+      "sites.js",
+      "background.js"
+    ]
   },
   "content_scripts": [
     {
@@ -80,5 +84,16 @@
   "homepage_url": "https://okikamil-orka.github.io/bezowijania/",
   "author": {
     "email": "orkaitkamilorlowski@gmail.com"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "bezowijania@okikamil-orka.github.io",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    }
   }
 }

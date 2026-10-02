@@ -2,7 +2,7 @@
 
 <img src="icons/logo.svg" width="96" align="right" alt="">
 
-Rozszerzenie do Chrome, które zamienia clickbaitowe tytuły na portalach na zdania mówiące, co się naprawdę stało.
+Rozszerzenie do Chrome i Firefoksa, które zamienia clickbaitowe tytuły na portalach na zdania mówiące, co się naprawdę stało.
 Przeskanuj wiadomości i otwórz tylko te, które Cię interesują.
 
 **Strona:** https://okikamil-orka.github.io/bezowijania/
@@ -30,6 +30,9 @@ Każdy artykuł ma w `<meta property="og:description">` krótkie, rzeczowe stres
 2. **Załaduj rozpakowane** → wskaż ten folder.
 3. Po zmianach w kodzie: ↻ na karcie rozszerzenia i odśwież stronę.
 
+**Firefox (140+):** `about:debugging#/runtime/this-firefox` → **Załaduj tymczasowy dodatek** → wskaż `manifest.json`.
+Firefox nie nadaje uprawnień do stron automatycznie: w `about:addons` → BezOwijania → **Uprawnienia** włącz dostęp do stron (inaczej nic się nie podmieni).
+
 ## Wydanie
 
 ```bash
@@ -40,11 +43,13 @@ zip -r dist/bezowijania-$(jq -r .version manifest.json).zip \
 
 ZIP wgrywasz do GitHub Releases i/lub do Chrome Web Store Developer Dashboard.
 
+Ten sam ZIP nadaje się też do addons.mozilla.org (Firefox).
+
 ## Pliki
 
 | Plik | Rola |
 |---|---|
-| `manifest.json` | Manifest V3, uprawnienia do Interii, WP, Onetu i ich serwisów |
+| `manifest.json` | Manifest V3 (Chrome i Firefox), uprawnienia do Interii, WP, Onetu i ich serwisów |
 | `sites.js` | konfiguracja portali: gdzie działa, jak rozpoznać artykuł, skąd wolno pobierać |
 | `background.js` | kolejka pobrań, wyciąganie streszczeń, pamięć podręczna |
 | `content.js` | wyszukiwanie linków, podmiana tytułów, dopasowanie do kafelków |

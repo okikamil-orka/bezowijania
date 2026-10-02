@@ -1,7 +1,8 @@
 // BezOwijania — background service worker.
 // Fetches article pages (cross-origin, so it must happen here, not in the content script)
 // and extracts the publisher's own factual summary from <meta property="og:description">.
-importScripts('sites.js');
+// Chrome loads sites.js via importScripts; Firefox lists it before this file in manifest background.scripts.
+if (typeof importScripts === 'function') importScripts('sites.js');
 
 const CACHE_TTL_MS = 3 * 24 * 60 * 60 * 1000; // 3 days
 const CACHE_PREFIX = 'c2:';                    // bump to invalidate older cache formats
